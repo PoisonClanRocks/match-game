@@ -3,84 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <title>30-Pair Secure Match</title>
-    <script type="module">
-        import { initializeApp } from "https://cdn.skypack.dev";
-        import { getFirestore, doc, setDoc, getDoc } from "https://cdn.skypack.dev";
+    <!-- 1. Load the Firebase Libraries (Compat Version) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
+<script>
+  // 2. Your Firebase Configuration (Paste your real keys here!)
+  const firebaseConfig = {
+    apiKey: "AIzaSyA90-AVLd6EZXm-y7r6kKpTCerbg0Sv93E",
+    authDomain: "collins-match-game.firebaseapp.com",
+    projectId: "collins-match-game",
+    storageBucket: "collins-match-game.firebasestorage.app",
+    messagingSenderId: "580574919571",
+    appId: "1:580574919571:web:f1cbf7cec28a62dacc8666",
+    measurementId: "G-719ZJRNTYP"
+  };
 
-        // TODO: REPLACE THIS WITH YOUR CONFIG FROM STEP 1.2
-        const firebaseConfig = {
-            apiKey: "AIzaSyA90-AVLd6EZXm-y7r6kKpTCerbg0Sv93E",
-            authDomain: "collins-match-game.firebaseapp.com",
-            projectId: "collins-match-game",
-            storageBucket: "collins-match-game.firebasestorage.app",
-            messagingSenderId: "1:580574919571:web:f1cbf7cec28a62dacc8666",
-            appId: "G-719ZJRNTYP"
-        };
+  // 3. Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+  // 4. Game Logic
+  const masterPairs = [
+      { name: "Aiden", hobby: "Geocaching" }, { name: "Bella", hobby: "Extreme Ironing" },
+      { name: "Caleb", hobby: "Tree Shaping" }, { name: "Dahlia", hobby: "Element Collecting" },
+      { name: "Ezra", hobby: "Astronomy" }, { name: "Fiona", hobby: "Archery" },
+      { name: "Gideon", hobby: "Woodworking" }, { name: "Hazel", hobby: "Leather Crafting" },
+      { name: "Isaac", hobby: "Fencing" }, { name: "Jade", hobby: "Diorama Building" },
+      { name: "Kai", hobby: "Scuba Diving" }, { name: "Luna", hobby: "Stargazing" },
+      { name: "Milo", hobby: "Model Rocketry" }, { name: "Nora", hobby: "Bird Watching" },
+      { name: "Owen", hobby: "Composting" }, { name: "Kora", hobby: "Soap Making" },
+      { name: "Liam", hobby: "Stone Skipping" }, { name: "Maya", hobby: "Beetle Fighting" },
+      { name: "Nolan", hobby: "Newsraiding" }, { name: "Olive", hobby: "Herbalism" },
+      { name: "Piper", hobby: "Mixology" }, { name: "Quinn", hobby: "Candle Making" },
+      { name: "Riley", hobby: "Metalworking" }, { name: "Silas", hobby: "Whittling" },
+      { name: "Tessa", hobby: "Origami" }, { name: "Uri", hobby: "Meteorology" },
+      { name: "Vera", hobby: "Calligraphy" }, { name: "Wyatt", hobby: "Glass Blowing" },
+      { name: "Xena", hobby: "Pottery" }, { name: "Yara", hobby: "Digital Art" }
+  ];
 
-        const masterPairs = [
-            { name: "Aiden", hobby: "Geocaching" }, { name: "Bella", hobby: "Extreme Ironing" },
-            { name: "Caleb", hobby: "Tree Shaping" }, { name: "Dahlia", hobby: "Element Collecting" },
-            { name: "Ezra", hobby: "Astronomy" }, { name: "Fiona", hobby: "Archery" },
-            { name: "Gideon", hobby: "Woodworking" }, { name: "Hazel", hobby: "Leather Crafting" },
-            { name: "Isaac", hobby: "Fencing" }, { name: "Jade", hobby: "Diorama Building" },
-            { name: "Kai", hobby: "Scuba Diving" }, { name: "Luna", hobby: "Stargazing" },
-            { name: "Milo", hobby: "Model Rocketry" }, { name: "Nora", hobby: "Bird Watching" },
-            { name: "Owen", hobby: "Composting" }, { name: "Kora", hobby: "Soap Making" },
-            { name: "Liam", hobby: "Stone Skipping" }, { name: "Maya", hobby: "Beetle Fighting" },
-            { name: "Nolan", hobby: "Newsraiding" }, { name: "Olive", hobby: "Herbalism" },
-            { name: "Piper", hobby: "Mixology" }, { name: "Quinn", hobby: "Candle Making" },
-            { name: "Riley", hobby: "Metalworking" }, { name: "Silas", hobby: "Whittling" },
-            { name: "Tessa", hobby: "Origami" }, { name: "Uri", hobby: "Meteorology" },
-            { name: "Vera", hobby: "Calligraphy" }, { name: "Wyatt", hobby: "Glass Blowing" },
-            { name: "Xena", hobby: "Pottery" }, { name: "Yara", hobby: "Digital Art" }
-        ];
+  function startGame() {
+      const name = document.getElementById('p-name').value.trim();
+      if (!name) return alert("Please enter your name!");
+      if (localStorage.getItem('played_' + name)) return alert("You already played!");
 
-        window.startGame = function() {
-            const name = document.getElementById('p-name').value.trim();
-            if (!name) return alert("Please enter your name!");
-            if (localStorage.getItem('played_' + name)) return alert("You already played!");
+      document.getElementById('setup').style.display = 'none';
+      document.getElementById('game').style.display = 'block';
+      renderGame(name);
+  }
 
-            document.getElementById('setup').style.display = 'none';
-            document.getElementById('game').style.display = 'block';
-            renderGame(name);
-        };
+  function renderGame(name) {
+      const container = document.getElementById('list');
+      const hobbies = [...masterPairs].map(p => p.hobby).sort(() => Math.random() - 0.5);
+      masterPairs.forEach((p, i) => {
+          container.innerHTML += `<div class='row'><b>${p.name}</b>: 
+              <select id='s-${i}'><option value=''>Choose...</option>
+              ${hobbies.map(h => `<option value='${h}'>${h}</option>`).join('')}</select></div>`;
+      });
+      window.currentPlayer = name;
+  }
 
-        function renderGame(name) {
-            const container = document.getElementById('list');
-            const hobbies = [...masterPairs].map(p => p.hobby).sort(() => Math.random() - 0.5);
-            masterPairs.forEach((p, i) => {
-                container.innerHTML += `<div class='row'><b>${p.name}</b>: 
-                    <select id='s-${i}'><option value=''>Choose...</option>
-                    ${hobbies.map(h => `<option value='${h}'>${h}</option>`).join('')}</select></div>`;
-            });
-            window.currentPlayer = name;
-        }
+  async function submit() {
+      const btn = document.getElementById('sub-btn');
+      btn.disabled = true;
+      let correct = 0;
+      masterPairs.forEach((p, i) => {
+          if (document.getElementById(`s-${i}`).value === p.hobby) correct++;
+      });
 
-        window.submit = async function() {
-            const btn = document.getElementById('sub-btn');
-            btn.disabled = true;
-            let correct = 0;
-            masterPairs.forEach((p, i) => {
-                if (document.getElementById(`s-${i}`).value === p.hobby) correct++;
-            });
+      try {
+          // Check if player already exists in the database
+          const docRef = db.collection("game_results").doc(window.currentPlayer);
+          const docSnap = await docRef.get();
 
-            try {
-                // Use player name as document ID to prevent duplicate submissions
-                const docRef = doc(db, "game_results", window.currentPlayer);
-                await setDoc(docRef, { name: window.currentPlayer, score: correct, date: new Date() });
-                
-                localStorage.setItem('played_' + window.currentPlayer, 'true');
-                alert(`Done! You got ${correct}/30 correct.`);
-                location.reload();
-            } catch (e) {
-                alert("Submission failed. You likely already played!");
-            }
-        };
-    </script>
+          if (docSnap.exists) {
+              alert("You have already submitted a score!");
+              location.reload();
+              return;
+          }
+
+          // Save the score
+          await docRef.set({
+              name: window.currentPlayer,
+              score: correct,
+              date: new Date()
+          });
+          
+          localStorage.setItem('played_' + window.currentPlayer, 'true');
+          alert(`Success! You matched ${correct}/30 correctly.`);
+          document.body.innerHTML = `<h1>Thank you for playing, ${window.currentPlayer}!</h1>`;
+      } catch (e) {
+          console.error(e);
+          alert("Submission failed. You may have already played.");
+      }
+  }
+</script>
+
     <style>
         body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 400px; }
@@ -98,4 +116,5 @@
     </div>
 </body>
 </html>
+
 
