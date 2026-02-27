@@ -66,13 +66,24 @@
   async function submit() {
       const btn = document.getElementById('sub-btn');
       btn.disabled = true;
+      
       let correct = 0;
+      let detailedBreakdown = {}; // New: This will hold the individual results
+
       masterPairs.forEach((p, i) => {
-          if (document.getElementById(`s-${i}`).value === p.hobby) correct++;
+          const userSelection = document.getElementById(`s-${i}`).value;
+          const matched = (userSelection === p.hobby);
+          
+          // Record the data for each person
+          detailedBreakdown[p.name] = {
+              selection: userSelection,
+              isCorrect: matched
+          };
+
+          if (matched) correct++;
       });
 
       try {
-          // Check if player already exists in the database
           const docRef = db.collection("game_results").doc(window.currentPlayer);
           const docSnap = await docRef.get();
 
@@ -82,10 +93,11 @@
               return;
           }
 
-          // Save the score
+          // Save the name, total score, AND the detailed breakdown
           await docRef.set({
               name: window.currentPlayer,
               score: correct,
+              breakdown: detailedBreakdown, // This shows the right/wrong list in Firebase
               date: new Date()
           });
           
@@ -95,8 +107,10 @@
       } catch (e) {
           console.error(e);
           alert("Submission failed. You may have already played.");
+          btn.disabled = false;
       }
   }
+
 </script>
 
     <style>
@@ -116,5 +130,6 @@
     </div>
 </body>
 </html>
+
 
 
