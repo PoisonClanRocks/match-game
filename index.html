@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>30-Pair Secure Match</title>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com"></script>
+    <script src="https://www.gstatic.com"></script>
 
 <script>
   const firebaseConfig = {
@@ -21,21 +21,36 @@
   const db = firebase.firestore();
 
   const masterPairs = [
-      { name: "Aiden", hobby: "Geocaching" }, { name: "Bella", hobby: "Extreme Ironing" },
-      { name: "Caleb", hobby: "Tree Shaping" }, { name: "Dahlia", hobby: "Element Collecting" },
-      { name: "Ezra", hobby: "Astronomy" }, { name: "Fiona", hobby: "Archery" },
-      { name: "Gideon", hobby: "Woodworking" }, { name: "Hazel", hobby: "Leather Crafting" },
-      { name: "Isaac", hobby: "Fencing" }, { name: "Jade", hobby: "Diorama Building" },
-      { name: "Kai", hobby: "Scuba Diving" }, { name: "Luna", hobby: "Stargazing" },
-      { name: "Milo", hobby: "Model Rocketry" }, { name: "Nora", hobby: "Bird Watching" },
-      { name: "Owen", hobby: "Composting" }, { name: "Kora", hobby: "Soap Making" },
-      { name: "Liam", hobby: "Stone Skipping" }, { name: "Maya", hobby: "Beetle Fighting" },
-      { name: "Nolan", hobby: "Newsraiding" }, { name: "Olive", hobby: "Herbalism" },
-      { name: "Piper", hobby: "Mixology" }, { name: "Quinn", hobby: "Candle Making" },
-      { name: "Riley", hobby: "Metalworking" }, { name: "Silas", hobby: "Whittling" },
-      { name: "Tessa", hobby: "Origami" }, { name: "Uri", hobby: "Meteorology" },
-      { name: "Vera", hobby: "Calligraphy" }, { name: "Wyatt", hobby: "Glass Blowing" },
-      { name: "Xena", hobby: "Pottery" }, { name: "Yara", hobby: "Digital Art" }
+      { name: "Aiden", hobby: "Geocaching", info: "Has found over 500 hidden caches worldwide." },
+      { name: "Bella", hobby: "Extreme Ironing", info: "Once ironed a formal shirt while scuba diving." },
+      { name: "Caleb", hobby: "Tree Shaping", info: "Currently growing a living chair made of willow." },
+      { name: "Dahlia", hobby: "Element Collecting", info: "Has a safe containing 80 different pure elements." },
+      { name: "Ezra", hobby: "Astronomy", info: "Builds custom telescopes in his spare time." },
+      { name: "Fiona", hobby: "Archery", info: "Can hit a bullseye from 70 meters away." },
+      { name: "Gideon", hobby: "Woodworking", info: "Carved a full-sized canoe from a single log." },
+      { name: "Hazel", hobby: "Leather Crafting", info: "Makes custom boots for local theater troupes." },
+      { name: "Isaac", hobby: "Fencing", info: "Ranked in the top 50 in the regional league." },
+      { name: "Jade", hobby: "Diorama Building", info: "Creates miniature 1:24 scale historical scenes." },
+      { name: "Kai", hobby: "Scuba Diving", info: "Explored three different shipwrecks last summer." },
+      { name: "Luna", hobby: "Stargazing", info: "Knows the location of every major constellation." },
+      { name: "Milo", hobby: "Model Rocketry", info: "Launched a rocket that reached 2,000 feet." },
+      { name: "Nora", hobby: "Bird Watching", info: "Keeps a life list of 400 unique bird species." },
+      { name: "Owen", hobby: "Composting", info: "Uses red wiggler worms for high-speed soil prep." },
+      { name: "Kora", hobby: "Soap Making", info: "Uses essential oils from her own herb garden." },
+      { name: "Liam", hobby: "Stone Skipping", info: "Once achieved 15 skips on a single throw." },
+      { name: "Maya", hobby: "Beetle Fighting", info: "Studies the biology of stag beetles specifically." },
+      { name: "Nolan", hobby: "Newsraiding", info: "Has a collection of vintage newspapers from 1900." },
+      { name: "Olive", hobby: "Herbalism", info: "Can identify 50 medicinal plants in the wild." },
+      { name: "Piper", hobby: "Mixology", info: "Won a local competition for a signature mocktail." },
+      { name: "Quinn", hobby: "Candle Making", info: "Specializes in hand-dipped beeswax candles." },
+      { name: "Riley", hobby: "Metalworking", info: "Forged a replica medieval sword by hand." },
+      { name: "Silas", hobby: "Whittling", info: "Carves tiny wooden animals from fallen twigs." },
+      { name: "Tessa", hobby: "Origami", info: "Can fold a paper crane the size of a fingernail." },
+      { name: "Uri", hobby: "Meteorology", info: "Runs a high-tech weather station from his roof." },
+      { name: "Vera", hobby: "Calligraphy", info: "Hand-writes formal invitations for charities." },
+      { name: "Wyatt", hobby: "Glass Blowing", info: "Creates colorful hand-spun glass ornaments." },
+      { name: "Xena", hobby: "Pottery", info: "Uses a foot-powered wheel for an authentic feel." },
+      { name: "Yara", hobby: "Digital Art", info: "Illustrates fantasy characters for indie games." }
   ];
 
   function startGame() {
@@ -68,9 +83,9 @@
       let correct = 0;
       let detailedBreakdown = {};
       
-      // Start building the results table HTML
+      // Build results table
       let resultsHtml = `<div class="summary-header"><h1>Results for ${window.currentPlayer}</h1></div>`;
-      resultsHtml += `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th></tr>`;
+      resultsHtml += `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th><th>Fun Fact</th></tr>`;
 
       masterPairs.forEach((p, i) => {
           const userSelection = document.getElementById(`s-${i}`).value;
@@ -83,13 +98,13 @@
 
           if (matched) correct++;
 
-          // Add row to table
           resultsHtml += `
             <tr>
                 <td>${p.name}</td>
                 <td class="${matched ? 'correct' : 'wrong'}">${userSelection || "---"}</td>
                 <td>${p.hobby}</td>
                 <td>${matched ? '✅' : '❌'}</td>
+                <td class="info-text">${p.info}</td>
             </tr>`;
       });
 
@@ -100,7 +115,7 @@
           const docSnap = await docRef.get();
 
           if (docSnap.exists) {
-              alert("You have already submitted a score!");
+              alert("You already submitted a score!");
               location.reload();
               return;
           }
@@ -114,7 +129,6 @@
           
           localStorage.setItem('played_' + window.currentPlayer, 'true');
           
-          // Display the results table on the screen
           document.body.innerHTML = `
             <div class="summary-header">
                 <h1>Score: ${correct} / 30</h1>
@@ -131,15 +145,16 @@
 
 <style>
     body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-    .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 400px; }
+    .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 450px; }
     button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
     .correct { color: #28a745; font-weight: bold; }
     .wrong { color: #dc3545; font-weight: bold; }
-    table { border-collapse: collapse; width: 100%; max-width: 600px; margin-top: 20px; }
+    table { border-collapse: collapse; width: 100%; max-width: 900px; margin-top: 20px; }
     th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
     th { background-color: #f2f2f2; }
     .summary-header { text-align: center; margin-bottom: 20px; }
     tr:nth-child(even) { background-color: #f9f9f9; }
+    .info-text { font-size: 0.85em; color: #555; font-style: italic; }
 </style>
 </head>
 <body>
