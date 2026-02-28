@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>30-Pair Secure Match</title>
-    <script src="https://www.gstatic.com"></script>
-    <script src="https://www.gstatic.com"></script>
+    <!-- 1. FIXED: Correct Firebase Library Links -->
+	<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
+  // 2. Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyA90-AVLd6EZXm-y7r6kKpTCerbg0Sv93E",
     authDomain: "collins-match-game.firebaseapp.com",
@@ -20,6 +22,7 @@
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
+  // 3. Master Data with Info
   const masterPairs = [
       { name: "Aiden", hobby: "Geocaching", info: "Has found over 500 hidden caches worldwide." },
       { name: "Bella", hobby: "Extreme Ironing", info: "Once ironed a formal shirt while scuba diving." },
@@ -83,9 +86,8 @@
       let correct = 0;
       let detailedBreakdown = {};
       
-      // Build results table
-      let resultsHtml = `<div class="summary-header"><h1>Results for ${window.currentPlayer}</h1></div>`;
-      resultsHtml += `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th><th>Fun Fact</th></tr>`;
+      // BUILD RESULTS TABLE
+      let resultsHtml = `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th><th>Fun Fact</th></tr>`;
 
       masterPairs.forEach((p, i) => {
           const userSelection = document.getElementById(`s-${i}`).value;
@@ -129,41 +131,47 @@
           
           localStorage.setItem('played_' + window.currentPlayer, 'true');
           
+          // REPLACING BODY WITH RESULTS
           document.body.innerHTML = `
             <div class="summary-header">
-                <h1>Score: ${correct} / 30</h1>
+                <h1>Results for ${window.currentPlayer}</h1>
+                <h2>Final Score: ${correct} / 30</h2>
             </div>
             ${resultsHtml}`;
 
       } catch (e) {
           console.error(e);
-          alert("Submission failed.");
+          alert("Submission failed. Check your internet or Firebase rules.");
           btn.disabled = false;
       }
   }
 </script>
 
 <style>
-    body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-    .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 450px; }
-    button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; background-color: #f4f7f6; }
+    #setup, #game { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; gap: 20px; min-width: 400px; }
+    button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    button:hover { background: #0056b3; }
     .correct { color: #28a745; font-weight: bold; }
     .wrong { color: #dc3545; font-weight: bold; }
-    table { border-collapse: collapse; width: 100%; max-width: 900px; margin-top: 20px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f2f2f2; }
+    table { border-collapse: collapse; width: 100%; max-width: 1000px; margin-top: 20px; background: white; }
+    th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+    th { background-color: #f8f9fa; }
     .summary-header { text-align: center; margin-bottom: 20px; }
-    tr:nth-child(even) { background-color: #f9f9f9; }
-    .info-text { font-size: 0.85em; color: #555; font-style: italic; }
+    tr:nth-child(even) { background-color: #fafafa; }
+    .info-text { font-size: 0.9em; color: #666; font-style: italic; line-height: 1.4; }
 </style>
 </head>
 <body>
     <div id="setup">
-        <input type="text" id="p-name" placeholder="Your Name">
-        <button onclick="startGame()">Start</button>
+        <h2>Welcome to the PSW Match Game! Enter your full name to start:</h2>
+        <input type="text" id="p-name" placeholder="Full Name" style="padding: 10px; width: 200px;">
+        <button onclick="startGame()">Start Game</button>
     </div>
     <div id="game" style="display:none;">
         <div id="list"></div>
+        <hr>
         <button id="sub-btn" onclick="submit()">Submit Answers</button>
     </div>
 </body>
