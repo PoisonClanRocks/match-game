@@ -69,17 +69,20 @@
 function renderGame(name) {
     const container = document.getElementById('list');
     
-    // 1. Create the list of hobbies once and scramble it
-    const shuffledHobbies = [...masterPairs].map(p => p.hobby);
-    shuffleArray(shuffledHobbies); // Scramble once for the whole game
+    // 1. Extract ALL hobbies, then use "new Set()" to remove duplicates
+    const allHobbies = masterPairs.map(p => p.hobby);
+    const uniqueHobbies = [...new Set(allHobbies)]; // Unique list only
+    
+    // 2. Shuffle the UNIQUE list
+    shuffleArray(uniqueHobbies);
 
-    // 2. Pre-build the <option> list string to reuse in every row
-    const optionsHtml = shuffledHobbies.map(h => `<option value='${h}'>${h}</option>`).join('');
+    // 3. Build the <option> list from the unique, shuffled hobbies
+    const optionsHtml = uniqueHobbies.map(h => `<option value='${h}'>${h}</option>`).join('');
 
     let gameHtml = ''; 
     masterPairs.forEach((p, i) => {
         gameHtml += `
-            <div class='row'> <!-- This class is vital! -->
+            <div class='row'>
                 <b>${p.name}</b>: 
                 <select id='s-${i}' onchange="updateProgress()">
                     <option value=''>Choose...</option>
@@ -91,15 +94,6 @@ function renderGame(name) {
     container.innerHTML = gameHtml;
     window.currentPlayer = name;
 }
-
-// 3. Add this helper function at the bottom of your <script> section
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Fisher-Yates swap
-    }
-}
-
 
   async function submit() {
       const btn = document.getElementById('sub-btn');
@@ -310,6 +304,7 @@ function updateProgress() {
     </div>
 </body>
 </html>
+
 
 
 
