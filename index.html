@@ -81,7 +81,7 @@ function renderGame(name) {
         gameHtml += `
             <div class='row'>
                 <b>${p.name}</b>: 
-                <select id='s-${i}'>
+                <select id='s-${i}' onchange="updateProgress()">
                     <option value=''>Choose...</option>
                     ${optionsHtml}
                 </select>
@@ -201,6 +201,17 @@ function shuffleArray(array) {
         document.getElementById("leader-list").innerHTML = "Scoreboard temporarily unavailable.";
     }
 }
+function updateProgress() {
+    let filledCount = 0;
+    for (let i = 0; i < masterPairs.length; i++) {
+        const val = document.getElementById(`s-${i}`).value;
+        if (val !== "") filledCount++;
+    }
+
+    const percent = (filledCount / masterPairs.length) * 100;
+    document.getElementById('progress-bar').style.width = percent + "%";
+    document.getElementById('progress-text').innerText = `Matched: ${filledCount} / ${masterPairs.length}`;
+}
 
 </script>
 
@@ -218,6 +229,41 @@ function shuffleArray(array) {
     .summary-header { text-align: center; margin-bottom: 20px; }
     tr:nth-child(even) { background-color: #fafafa; }
     .info-text { font-size: 0.9em; color: #666; font-style: italic; line-height: 1.4; }
+	#sticky-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 15px;
+    border-bottom: 2px solid #007bff;
+    z-index: 1000;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+#progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    height: 12px;
+    margin-bottom: 5px;
+    overflow: hidden;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #28a745;
+    transition: width 0.3s ease; /* Smooth sliding animation */
+}
+
+#progress-text {
+    margin: 0;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #555;
+}
+
 </style>
 </head>
 <body>
@@ -227,10 +273,18 @@ function shuffleArray(array) {
         <button onclick="startGame()">Start Game</button>
     </div>
     <div id="game" style="display:none;">
+		<div id="sticky-header">
+    <div id="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+    <p id="progress-text">Matched: 0 / 30</p>
+</div>
+
         <div id="list"></div>
         <hr>
         <button id="sub-btn" onclick="submit()">Submit Answers</button>
     </div>
 </body>
 </html>
+
 
