@@ -83,16 +83,19 @@ function renderGame(name) {
 
     let gameHtml = ''; 
     masterPairs.forEach((p, i) => {
-        // Ensure each person gets a row with the shared unique dropdown
-        gameHtml += `
-            <div class='row'>
-                <b>${p.name}</b>: 
-                <select id='s-${i}' onchange="updateProgress()">
-                    <option value=''>Choose...</option>
-                    ${optionsHtml}
-                </select>
-            </div>`;
-    });
+    gameHtml += `
+        <div class='row'>
+            <div class="person-profile">
+                <img src="${p.image}" alt="${p.name}" class="profile-pic">
+                <b>${p.name}</b>
+            </div>
+            <select id='s-${i}' onchange="updateProgress()">
+                <option value=''>Choose...</option>
+                ${optionsHtml}
+            </select>
+        </div>`;
+});
+
 
     // 4. Inject into the page
     container.innerHTML = gameHtml;
@@ -128,14 +131,18 @@ function shuffleArray(array) {
 
           if (matched) correct++;
 
-          resultsHtml += `
-            <tr>
-                <td>${p.name}</td>
-                <td class="${matched ? 'correct' : 'wrong'}">${userSelection || "---"}</td>
-                <td>${p.hobby}</td>
-                <td>${matched ? '✅' : '❌'}</td>
-                <td class="info-text">${p.info}</td>
-            </tr>`;
+         resultsHtml += `
+  <tr>
+      <td>
+          <img src="${p.image}" style="width:30px; height:30px; border-radius:50%; vertical-align:middle; margin-right:8px;">
+          ${p.name}
+      </td>
+      <td class="${matched ? 'correct' : 'wrong'}">${userSelection || "---"}</td>
+      <td>${p.hobby}</td>
+      <td>${matched ? '✅' : '❌'}</td>
+      <td class="info-text">${p.info}</td>
+  </tr>`;
+
       });
 
       // disable the "back to start" button
@@ -293,6 +300,30 @@ function updateProgress() {
     background-color: #e7f3ff; /* Light Blue */
     border-left: 4px solid #007bff; /* Bright Blue accent */
 }
+.person-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-pic {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    background-color: #eee; /* Fallback color */
+}
+
+/* Adjust row height to fit photos and dropdowns side-by-side */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    margin: 8px 0;
+    max-width: 500px;
+}
 
 </style>
 </head>
@@ -316,6 +347,7 @@ function updateProgress() {
     </div>
 </body>
 </html>
+
 
 
 
