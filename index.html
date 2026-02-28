@@ -79,7 +79,7 @@ function renderGame(name) {
     let gameHtml = ''; 
     masterPairs.forEach((p, i) => {
         gameHtml += `
-            <div class='row'>
+            <div class='row'> <!-- This class is vital! -->
                 <b>${p.name}</b>: 
                 <select id='s-${i}' onchange="updateProgress()">
                     <option value=''>Choose...</option>
@@ -203,15 +203,25 @@ function shuffleArray(array) {
 }
 function updateProgress() {
     let filledCount = 0;
+    
     for (let i = 0; i < masterPairs.length; i++) {
-        const val = document.getElementById(`s-${i}`).value;
-        if (val !== "") filledCount++;
+        const selectElement = document.getElementById(`s-${i}`);
+        const rowElement = selectElement.closest('.row'); // Finds the parent row div
+        
+        if (selectElement.value !== "") {
+            filledCount++;
+            rowElement.classList.add('row-selected');
+        } else {
+            rowElement.classList.remove('row-selected');
+        }
     }
 
+    // Update the progress bar as before
     const percent = (filledCount / masterPairs.length) * 100;
     document.getElementById('progress-bar').style.width = percent + "%";
     document.getElementById('progress-text').innerText = `Matched: ${filledCount} / ${masterPairs.length}`;
 }
+
 
 </script>
 
@@ -263,6 +273,19 @@ function updateProgress() {
     font-size: 0.9em;
     color: #555;
 }
+/* The base row style needs a transition for the color fade */
+.row { 
+    transition: background-color 0.4s ease, border-left 0.4s ease;
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 4px solid transparent; /* Hidden until selected */
+}
+
+/* The highlight style for filled rows */
+.row-selected {
+    background-color: #e7f3ff; /* Light Blue */
+    border-left: 4px solid #007bff; /* Bright Blue accent */
+}
 
 </style>
 </head>
@@ -286,5 +309,6 @@ function updateProgress() {
     </div>
 </body>
 </html>
+
 
 
