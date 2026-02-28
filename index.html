@@ -132,7 +132,8 @@ function shuffleArray(array) {
             </tr>`;
       });
 
-      resultsHtml += `</table><br><button onclick="location.reload()">Back to Start</button>`;
+      // disable the "back to start" button
+      //resultsHtml += `</table><br><button onclick="location.reload()">Back to Start</button>`;
 
       try {
           const docRef = db.collection("game_results").doc(window.currentPlayer);
@@ -309,6 +310,7 @@ function updateProgress() {
     </div>
 </body>
 </html>
+
 
 
 
