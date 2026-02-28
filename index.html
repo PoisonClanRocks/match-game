@@ -23,38 +23,38 @@
   const db = firebase.firestore();
 
   // 3. Master Data with Info
-  const masterPairs = [
-      { name: "Aiden", hobby: "Geocaching", info: "Has found over 500 hidden caches worldwide." },
-      { name: "Bella", hobby: "Extreme Ironing", info: "Once ironed a formal shirt while scuba diving." },
-      { name: "Caleb", hobby: "Tree Shaping", info: "Currently growing a living chair made of willow." },
-      { name: "Dahlia", hobby: "Element Collecting", info: "Has a safe containing 80 different pure elements." },
-      { name: "Ezra", hobby: "Astronomy", info: "Builds custom telescopes in his spare time." },
-      { name: "Fiona", hobby: "Archery", info: "Can hit a bullseye from 70 meters away." },
-      { name: "Gideon", hobby: "Woodworking", info: "Carved a full-sized canoe from a single log." },
-      { name: "Hazel", hobby: "Leather Crafting", info: "Makes custom boots for local theater troupes." },
-      { name: "Isaac", hobby: "Fencing", info: "Ranked in the top 50 in the regional league." },
-      { name: "Jade", hobby: "Diorama Building", info: "Creates miniature 1:24 scale historical scenes." },
-      { name: "Kai", hobby: "Scuba Diving", info: "Explored three different shipwrecks last summer." },
-      { name: "Luna", hobby: "Stargazing", info: "Knows the location of every major constellation." },
-      { name: "Milo", hobby: "Model Rocketry", info: "Launched a rocket that reached 2,000 feet." },
-      { name: "Nora", hobby: "Bird Watching", info: "Keeps a life list of 400 unique bird species." },
-      { name: "Owen", hobby: "Composting", info: "Uses red wiggler worms for high-speed soil prep." },
-      { name: "Kora", hobby: "Soap Making", info: "Uses essential oils from her own herb garden." },
-      { name: "Liam", hobby: "Stone Skipping", info: "Once achieved 15 skips on a single throw." },
-      { name: "Maya", hobby: "Beetle Fighting", info: "Studies the biology of stag beetles specifically." },
-      { name: "Nolan", hobby: "Newsraiding", info: "Has a collection of vintage newspapers from 1900." },
-      { name: "Olive", hobby: "Herbalism", info: "Can identify 50 medicinal plants in the wild." },
-      { name: "Piper", hobby: "Mixology", info: "Won a local competition for a signature mocktail." },
-      { name: "Quinn", hobby: "Candle Making", info: "Specializes in hand-dipped beeswax candles." },
-      { name: "Riley", hobby: "Metalworking", info: "Forged a replica medieval sword by hand." },
-      { name: "Silas", hobby: "Whittling", info: "Carves tiny wooden animals from fallen twigs." },
-      { name: "Tessa", hobby: "Origami", info: "Can fold a paper crane the size of a fingernail." },
-      { name: "Uri", hobby: "Meteorology", info: "Runs a high-tech weather station from his roof." },
-      { name: "Vera", hobby: "Calligraphy", info: "Hand-writes formal invitations for charities." },
-      { name: "Wyatt", hobby: "Glass Blowing", info: "Creates colorful hand-spun glass ornaments." },
-      { name: "Xena", hobby: "Pottery", info: "Uses a foot-powered wheel for an authentic feel." },
-      { name: "Yara", hobby: "Digital Art", info: "Illustrates fantasy characters for indie games." }
-  ];
+const masterPairs = [
+    { name: "Lloyd Allen", hobby: "Infosec", info: "Has attended a few DEFCONs!", image: "images/lloyd_allen.jpg" },
+    { name: "Mark Belonio", hobby: "Finding the One Piece", info: "ONE PIECE IS REAL. Also loves cooking, MMA, and singing.", image: "images/mark_belonio.jpg" },
+    { name: "Scott Blake", hobby: "Gardening", info: "His favorite thing to grow in the garden is Tomatoes.", image: "images/scott_blake.jpg" },
+    { name: "Cheri Bowden", hobby: "Panning for Gold", info: "Also enjoys fishing, archery, sewing, and camping.", image: "images/cheri_bowden.jpg" },
+    { name: "Marley Breese", hobby: "Collecting Concert T-Shirts", info: "Current favorites are Jon Bellion and Rainbow Kitten Surprise.", image: "images/marley_breese.jpg" },
+    { name: "Will Costanzo", hobby: "Collecting Cards & Star Wars", info: "Owns a rare Lugia card and grocery store promo cardboard stands.", image: "images/will_costanzo.jpg" },
+    { name: "Stan Draminski", hobby: "Columbus Crew (MLS)", info: "A huge fan of the Crew and also loves playing board games.", image: "images/stan_draminski.jpg" },
+    { name: "Saul Figueroa", hobby: "Skiing", info: "Skiing has harmed him recently, but he still loves it.", image: "images/saul_figueroa.jpg" },
+    { name: "Amber Haas", hobby: "Retro Game Collecting", info: "Proud owner of SNES Super Mario World and N64 Starfox64 carts.", image: "images/amber_haas.jpg" },
+    { name: "Justin Keefer", hobby: "Country Dancing", info: "Ask him about his favorite two-step spots!", image: "images/justin_keefer.jpg" },
+    { name: "Alexis Keller", hobby: "Off-roading", info: "Her favorite place to take the rig off-road is Pismo.", image: "images/alexis_keller.jpg" },
+    { name: "Alex King", hobby: "Mead Brewing", info: "Promises to bring a batch of home-brew to the office soon.", image: "images/alex_king.jpg" },
+    { name: "Duo Li", hobby: "FC Barcelona", info: "Has visited Camp Nou; attending a live game is a bucket list item!", image: "images/duo_li.jpg" },
+    { name: "Eric Magoffin", hobby: "Riding Motorcycles", info: "Loves riding the Bush Hwy and dreams of a Kawasaki Ninja H2.", image: "images/eric_magoffin.jpg" },
+    { name: "Benito Moeckly", hobby: "Comics", info: "Favorite is Ultimate Spiderman; currently into Absolute Batman.", image: "images/benito_moeckly.jpg" },
+    { name: "Drew Moses", hobby: "Wine Tasting", info: "Traveled to Sienna, Italy for wine and Florentine steaks.", image: "images/drew_moses.jpg" },
+    { name: "Brian Murphy", hobby: "Woodworking", info: "Ask him about his latest shop project!", image: "images/brian_murphy.jpg" },
+    { name: "Tyler Neerings", hobby: "'Factory' Games", info: "His current favorite time-sink is the game Satisfactory.", image: "images/tyler_neerings.jpg" },
+    { name: "Josh O'Connor", hobby: "Mountain Biking", info: "Has been riding for a decade and recently started racing.", image: "images/josh_oconnor.jpg" },
+    { name: "Alex Pagan", hobby: "To be discovered...", info: "Hobby info coming soon!", image: "images/alex_pagan.jpg" },
+    { name: "Geovany Pineda", hobby: "Gaming & Puzzles", info: "Enjoys board games, escape rooms, and watching good TV.", image: "images/geovany_pineda.jpg" },
+    { name: "Natasha Proctor", hobby: "Running", info: "Has successfully completed several city runs.", image: "images/natasha_proctor.jpg" },
+    { name: "Jeff Rase", hobby: "Guitar and Piano", info: "A multi-instrumentalist who loves playing music.", image: "images/jeff_rase.jpg" },
+    { name: "Ed Riley", hobby: "Space Exploration", info: "Interested in SETI and the search for extraterrestrial life.", image: "images/ed_riley.jpg" },
+    { name: "John Sanchez", hobby: "Basketball", info: "Likes playing guard; fans of Lebron James and SGA.", image: "images/john_sanchez.jpg" },
+    { name: "Isaac Shell", hobby: "Writing Fantasy", info: "Currently writing a novel and a game in Unreal Engine.", image: "images/isaac_shell.jpg" },
+    { name: "Lam Truong", hobby: "To be discovered...", info: "Hobby info coming soon!", image: "images/lam_truong.jpg" },
+    { name: "Tyler Trumpie", hobby: "Worldbuilding", info: "Builds D&D campaigns and explores open-world game lore.", image: "images/tyler_trumpie.jpg" },
+    { name: "Jake Whitebread", hobby: "Hiking", info: "His all-time favorite hikes are Brown's Peak and Flatiron.", image: "images/jake_whitebread.jpg" },
+    { name: "Stefan Woods", hobby: "Reading", info: "Ask him for a book series recommendation!", image: "images/stefan_woods.jpg" }
+];
 
   function startGame() {
       const name = document.getElementById('p-name').value.trim();
@@ -316,6 +316,7 @@ function updateProgress() {
     </div>
 </body>
 </html>
+
 
 
 
