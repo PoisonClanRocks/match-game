@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>30-Pair Secure Match</title>
-    <!-- 1. Load the Firebase Libraries (Compat Version) -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // 2. Your Firebase Configuration (Paste your real keys here!)
   const firebaseConfig = {
     apiKey: "AIzaSyA90-AVLd6EZXm-y7r6kKpTCerbg0Sv93E",
     authDomain: "collins-match-game.firebaseapp.com",
@@ -19,11 +17,9 @@
     measurementId: "G-719ZJRNTYP"
   };
 
-  // 3. Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const db = firebase.firestore();
 
-  // 4. Game Logic
   const masterPairs = [
       { name: "Aiden", hobby: "Geocaching" }, { name: "Bella", hobby: "Extreme Ironing" },
       { name: "Caleb", hobby: "Tree Shaping" }, { name: "Dahlia", hobby: "Element Collecting" },
@@ -55,11 +51,13 @@
   function renderGame(name) {
       const container = document.getElementById('list');
       const hobbies = [...masterPairs].map(p => p.hobby).sort(() => Math.random() - 0.5);
+      let gameHtml = ''; 
       masterPairs.forEach((p, i) => {
-          container.innerHTML += `<div class='row'><b>${p.name}</b>: 
+          gameHtml += `<div class='row'><b>${p.name}</b>: 
               <select id='s-${i}'><option value=''>Choose...</option>
               ${hobbies.map(h => `<option value='${h}'>${h}</option>`).join('')}</select></div>`;
       });
+      container.innerHTML = gameHtml;
       window.currentPlayer = name;
   }
 
@@ -68,20 +66,34 @@
       btn.disabled = true;
       
       let correct = 0;
-      let detailedBreakdown = {}; // New: This will hold the individual results
+      let detailedBreakdown = {};
+      
+      // Start building the results table HTML
+      let resultsHtml = `<div class="summary-header"><h1>Results for ${window.currentPlayer}</h1></div>`;
+      resultsHtml += `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th></tr>`;
 
       masterPairs.forEach((p, i) => {
           const userSelection = document.getElementById(`s-${i}`).value;
           const matched = (userSelection === p.hobby);
           
-          // Record the data for each person
           detailedBreakdown[p.name] = {
-              selection: userSelection,
+              selection: userSelection || "None",
               isCorrect: matched
           };
 
           if (matched) correct++;
+
+          // Add row to table
+          resultsHtml += `
+            <tr>
+                <td>${p.name}</td>
+                <td class="${matched ? 'correct' : 'wrong'}">${userSelection || "---"}</td>
+                <td>${p.hobby}</td>
+                <td>${matched ? '✅' : '❌'}</td>
+            </tr>`;
       });
+
+      resultsHtml += `</table><br><button onclick="location.reload()">Back to Start</button>`;
 
       try {
           const docRef = db.collection("game_results").doc(window.currentPlayer);
@@ -93,31 +105,42 @@
               return;
           }
 
-          // Save the name, total score, AND the detailed breakdown
           await docRef.set({
               name: window.currentPlayer,
               score: correct,
-              breakdown: detailedBreakdown, // This shows the right/wrong list in Firebase
+              breakdown: detailedBreakdown,
               date: new Date()
           });
           
           localStorage.setItem('played_' + window.currentPlayer, 'true');
-          alert(`Success! You matched ${correct}/30 correctly.`);
-          document.body.innerHTML = `<h1>Thank you for playing, ${window.currentPlayer}!</h1>`;
+          
+          // Display the results table on the screen
+          document.body.innerHTML = `
+            <div class="summary-header">
+                <h1>Score: ${correct} / 30</h1>
+            </div>
+            ${resultsHtml}`;
+
       } catch (e) {
           console.error(e);
-          alert("Submission failed. You may have already played.");
+          alert("Submission failed.");
           btn.disabled = false;
       }
   }
-
 </script>
 
-    <style>
-        body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 400px; }
-        button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
-    </style>
+<style>
+    body { font-family: sans-serif; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    .row { margin: 10px 0; width: 100%; display: flex; justify-content: space-between; max-width: 400px; }
+    button { padding: 10px 20px; background: #007bff; color: #fff; border: none; border-radius: 4px; cursor: pointer; }
+    .correct { color: #28a745; font-weight: bold; }
+    .wrong { color: #dc3545; font-weight: bold; }
+    table { border-collapse: collapse; width: 100%; max-width: 600px; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f2f2f2; }
+    .summary-header { text-align: center; margin-bottom: 20px; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+</style>
 </head>
 <body>
     <div id="setup">
@@ -130,6 +153,3 @@
     </div>
 </body>
 </html>
-
-
-
