@@ -64,6 +64,10 @@ const masterPairs = [
       if (!name) return alert("Please enter your name!");
       if (localStorage.getItem('played_' + name)) return alert("You already played!");
 
+	// SHUFFLE NAMES HERE:
+    // This randomizes the order of people before they are rendered
+    shuffleArray(masterPairs);
+	  
       document.getElementById('setup').style.display = 'none';
       document.getElementById('game').style.display = 'block';
       renderGame(name);
@@ -192,6 +196,8 @@ function shuffleArray(array) {
           
           // REPLACING BODY WITH RESULTS
           document.body.innerHTML = `
+		      <!-- 1. Add the company logo at the top of the results page -->
+    <img src="images/company-logo.png" alt="Company Logo" class="company-logo">
             <div class="summary-header">
                 <h1>Results for ${window.currentPlayer}</h1>
                 <h2>Final Score: ${correct} / 30</h2>
@@ -546,14 +552,29 @@ select {
     line-height: 1.4;
 }
 
+	.company-logo {
+    display: block;
+    margin: 0 auto 20px auto; /* Centers horizontally and adds space below */
+    max-width: 180px; /* Adjust this size to fit your logo's design */
+    height: auto;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); /* Subtle lift */
+}
+
+/* Ensure the setup container centers its contents */
+#setup {
+    text-align: center;
+    padding: 40px;
+}
+
 </style>
 
 </head>
 <body>
     <div id="setup">
+		 <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
     <h1 class="hero-title">
         Welcome to the <br> 
-        <span>PSW Match Game!</span>
+        <span>Collins FMS Next Match Game!</span>
     </h1>
     <p class="hero-subtitle">Enter your full name to begin the challenge:</p>
     
@@ -577,6 +598,7 @@ select {
     </div>
 </body>
 </html>
+
 
 
 
