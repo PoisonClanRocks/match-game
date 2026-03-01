@@ -83,17 +83,23 @@ function renderGame(name) {
 
     let gameHtml = ''; 
     masterPairs.forEach((p, i) => {
-    gameHtml += `
-        <div class='row'>
-            <div class="person-profile">
-                <img src="${p.image}" alt="${p.name}" class="profile-pic">
-                <b>${p.name}</b>
+gameHtml += `
+    <div class='row'>
+        <div class="person-profile">
+            <img src="${p.image}" alt="${p.name}" class="profile-pic">
+            <div class="name-container">
+                <span class="person-name">${p.name}</span>
+                <span class="person-subtext">The Challenge</span>
             </div>
+        </div>
+        <div class="select-wrapper">
             <select id='s-${i}' onchange="updateProgress()">
-                <option value=''>Choose...</option>
+                <option value=''>Choose Hobby...</option>
                 ${optionsHtml}
             </select>
-        </div>`;
+        </div>
+    </div>`;
+
 });
 
 
@@ -240,6 +246,61 @@ function updateProgress() {
 </script>
 
 <style>
+
+	/* Styling the Name and Subtext */
+.name-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.person-name {
+    font-size: 1.1rem;
+    font-weight: 700; /* Bold Inter */
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.person-subtext {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary); /* Indigo highlight */
+}
+
+/* Enhancing the Card Row */
+.row {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 20px 24px;
+    border-radius: 16px; /* Smoother corners */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin: 16px 0;
+    width: 600px; /* Consistent desktop width */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Polishing the Dropdowns */
+select {
+    appearance: none; /* Custom look */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding: 12px 40px 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-weight: 500;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+select:hover {
+    border-color: var(--primary);
+}
+
+	
 	.hero-title {
     font-size: 2.2rem;
     font-weight: 800; /* Extra bold */
@@ -456,4 +517,5 @@ th { background-color: #f8f9fa; font-weight: 700; }
     </div>
 </body>
 </html>
+
 
