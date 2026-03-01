@@ -185,6 +185,7 @@ function shuffleArray(array) {
               return;
           }
 
+          // Save the name, total score, and breakdown to Firestore
           await docRef.set({
               name: window.currentPlayer,
               score: correct,
@@ -194,25 +195,36 @@ function shuffleArray(array) {
           
           localStorage.setItem('played_' + window.currentPlayer, 'true');
           
-                    // 1. First, update the HTML on the screen
+          // 1. Update the HTML on the screen with Results and your personal Message
           document.body.innerHTML = `
-    <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
-    
-    <div class="summary-header">
-        <h1 class="results-title">
-            Nice work, <br>
-            <span class="results-name-highlight">${window.currentPlayer}!</span>
-        </h1>
-        <div class="score-badge">
-            Final Score: ${correct} / 30
-        </div>
-    </div>
-    
-    ${resultsHtml}
-`;
-		  window.scrollTo(0, 0);
+            <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
+            
+            <div class="summary-header">
+                <h1 class="results-title">
+                    Nice work, <br>
+                    <span class="results-name-highlight">${window.currentPlayer}!</span>
+                </h1>
+                <div class="score-badge">
+                    Final Score: ${correct} / 30
+                </div>
+            </div>
+            
+            ${resultsHtml}
 
-          // 2. NOW call the confetti (Outside the backticks!)
+            <!-- The Personal Thank You Message -->
+            <div class="final-note">
+                Thank you for playing! I hope you had fun testing your knowledge of your team members, 
+                as well as maybe learning a thing or two about someone.<br><br>
+                I had a lot of fun making this game and discovering that I have 
+                something in common with many of you!
+                <div class="final-signature">✨ Thanks for being part of the team ✨</div>
+            </div>
+          `;
+
+          // 2. Scroll to the top immediately so they see the logo/score
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // 3. Call the confetti celebration
           confetti({
               particleCount: 150,
               spread: 70,
@@ -220,15 +232,13 @@ function shuffleArray(array) {
               colors: ['#6366f1', '#22c55e', '#f59e0b'],
               zIndex: 9999
           });
-		  
-		  //showLeaderboard(); 
 
       } catch (e) {
           console.error(e);
           alert("Submission failed. Check your internet or Firebase rules.");
           btn.disabled = false;
       }
-  }
+
 	async function showLeaderboard() {
     const leaderboardDiv = document.createElement('div');
     leaderboardDiv.innerHTML = `<br><hr><h2>🏆 Global Top 3</h2><div id="leader-list">Loading...</div>`;
@@ -604,6 +614,25 @@ select {
     border: 1px solid #e2e8f0;
 }
 
+	.final-note {
+    background: #f1f5f9;
+    color: var(--text-muted);
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    border: 1px dashed #cbd5e1;
+}
+
+.final-signature {
+    margin-top: 15px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
 </style>
 
 </head>
@@ -636,6 +665,7 @@ select {
     </div>
 </body>
 </html>
+
 
 
 
