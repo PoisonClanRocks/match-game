@@ -194,24 +194,24 @@ function shuffleArray(array) {
           
           localStorage.setItem('played_' + window.currentPlayer, 'true');
           
-          // REPLACING BODY WITH RESULTS
+                    // 1. First, update the HTML on the screen
           document.body.innerHTML = `
-		      <!-- 1. Add the company logo at the top of the results page -->
-    <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
-            <div class="summary-header">
-                <h1>Results for ${window.currentPlayer}</h1>
-                <h2>Final Score: ${correct} / 30</h2>
-            </div>
-			// Inside submit() after document.body.innerHTML is updated:
-confetti({
-  particleCount: 150,
-  spread: 70,
-  origin: { y: 0.6 },
-  colors: ['#6366f1', '#22c55e', '#f59e0b'] // Matches your Indigo/Emerald theme
-});
+              <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
+              <div class="summary-header">
+                  <h1>Results for ${window.currentPlayer}</h1>
+                  <h2>Final Score: ${correct} / 30</h2>
+              </div>
+              ${resultsHtml}`;
 
-            ${resultsHtml}`;
-
+          // 2. NOW call the confetti (Outside the backticks!)
+          confetti({
+              particleCount: 150,
+              spread: 70,
+              origin: { y: 0.6 },
+              colors: ['#6366f1', '#22c55e', '#f59e0b'],
+              zIndex: 9999
+          });
+		  
 		  //showLeaderboard(); 
 
       } catch (e) {
@@ -598,6 +598,7 @@ select {
     </div>
 </body>
 </html>
+
 
 
 
