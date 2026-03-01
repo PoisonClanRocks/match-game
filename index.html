@@ -175,7 +175,7 @@ function shuffleArray(array) {
             </div>
             ${resultsHtml}`;
 
-		  showLeaderboard(); 
+		  //showLeaderboard(); 
 
       } catch (e) {
           console.error(e);
@@ -240,6 +240,51 @@ function updateProgress() {
 </script>
 
 <style>
+	.hero-title {
+    font-size: 2.2rem;
+    font-weight: 800; /* Extra bold */
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 10px;
+    color: var(--text-main);
+    text-align: center;
+}
+
+.hero-title span {
+    color: var(--primary); /* Indigo highlight */
+    background: linear-gradient(120deg, #818cf8 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+#p-name {
+    padding: 14px 20px;
+    font-size: 1.1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#p-name:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
 :root {
     --primary: #6366f1; /* Indigo */
     --success: #22c55e; /* Emerald */
@@ -385,10 +430,18 @@ th { background-color: #f8f9fa; font-weight: 700; }
 </head>
 <body>
     <div id="setup">
-        <h2>Welcome to the PSW Match Game! Enter your full name to start:</h2>
-        <input type="text" id="p-name" placeholder="Full Name" style="padding: 10px; width: 200px;">
-        <button onclick="startGame()">Start Game</button>
+    <h1 class="hero-title">
+        Welcome to the <br> 
+        <span>PSW Match Game!</span>
+    </h1>
+    <p class="hero-subtitle">Enter your full name to begin the challenge:</p>
+    
+    <div class="input-group">
+        <input type="text" id="p-name" placeholder="First and Last Name">
+        <button onclick="startGame()">Start Playing</button>
     </div>
+</div>
+
     <div id="game" style="display:none;">
 		<div id="sticky-header">
     <div id="progress-container">
@@ -403,14 +456,4 @@ th { background-color: #f8f9fa; font-weight: 700; }
     </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
 
