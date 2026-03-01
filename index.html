@@ -82,25 +82,24 @@ function renderGame(name) {
     const optionsHtml = uniqueHobbies.map(h => `<option value='${h}'>${h}</option>`).join('');
 
     let gameHtml = ''; 
-    masterPairs.forEach((p, i) => {
-gameHtml += `
-    <div class='row'>
-        <div class="person-profile">
-            <img src="${p.image}" alt="${p.name}" class="profile-pic">
-            <div class="name-container">
-                <span class="person-name">${p.name}</span>
-                <span class="person-subtext">The Challenge</span>
+masterPairs.forEach((p, i) => {
+    gameHtml += `
+        <div class='row'>
+            <div class="person-profile">
+                <img src="${p.image}" alt="${p.name}" class="profile-pic">
+                <div class="name-container">
+                    <span class="person-name">${p.name}</span>
+                </div>
             </div>
-        </div>
-        <div class="select-wrapper">
-            <select id='s-${i}' onchange="updateProgress()">
-                <option value=''>Choose Hobby...</option>
-                ${optionsHtml}
-            </select>
-        </div>
-    </div>`;
-
+            <div class="select-wrapper">
+                <select id='s-${i}' onchange="updateProgress()">
+                    <option value=''>Choose Hobby...</option>
+                    ${optionsHtml}
+                </select>
+            </div>
+        </div>`;
 });
+
 
 
     // 4. Inject into the page
@@ -517,5 +516,6 @@ th { background-color: #f8f9fa; font-weight: 700; }
     </div>
 </body>
 </html>
+
 
 
