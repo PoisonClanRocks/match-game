@@ -196,12 +196,20 @@ function shuffleArray(array) {
           
                     // 1. First, update the HTML on the screen
           document.body.innerHTML = `
-              <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
-              <div class="summary-header">
-                  <h1>Results for ${window.currentPlayer}</h1>
-                  <h2>Final Score: ${correct} / 30</h2>
-              </div>
-              ${resultsHtml}`;
+    <img src="images/performance_logo.jpg" alt="Company Logo" class="company-logo">
+    
+    <div class="summary-header">
+        <h1 class="results-title">
+            Nice work, <br>
+            <span class="results-name-highlight">${window.currentPlayer}!</span>
+        </h1>
+        <div class="score-badge">
+            Final Score: ${correct} / 30
+        </div>
+    </div>
+    
+    ${resultsHtml}
+`;
 		  window.scrollTo(0, 0);
 
           // 2. NOW call the confetti (Outside the backticks!)
@@ -567,6 +575,35 @@ select {
     padding: 40px;
 }
 
+	/* Results Header Styling */
+.results-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    margin-bottom: 5px;
+    color: var(--text-main);
+    text-align: center;
+}
+
+.results-name-highlight {
+    color: var(--primary);
+    background: linear-gradient(120deg, #818cf8 0%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.score-badge {
+    display: inline-block;
+    background: #f1f5f9;
+    color: var(--primary);
+    padding: 8px 20px;
+    border-radius: 99px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    border: 1px solid #e2e8f0;
+}
+
 </style>
 
 </head>
@@ -599,6 +636,7 @@ select {
     </div>
 </body>
 </html>
+
 
 
 
