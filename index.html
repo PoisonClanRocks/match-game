@@ -6,6 +6,7 @@
     <!-- 1. FIXED: Correct Firebase Library Links -->
 	<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+	<script src="https://cdn.jsdelivr.net"></script>
 
 <script>
   // 2. Firebase Configuration
@@ -123,7 +124,7 @@ function shuffleArray(array) {
       let detailedBreakdown = {};
       
       // BUILD RESULTS TABLE
-      let resultsHtml = `<table><tr><th>Person</th><th>Your Choice</th><th>Correct Hobby</th><th>Status</th><th>Fun Fact</th></tr>`;
+            let resultsHtml = `<div class="results-grid">`;
 
       masterPairs.forEach((p, i) => {
           const userSelection = document.getElementById(`s-${i}`).value;
@@ -136,19 +137,34 @@ function shuffleArray(array) {
 
           if (matched) correct++;
 
-         resultsHtml += `
-  <tr>
-      <td>
-          <img src="${p.image}" style="width:30px; height:30px; border-radius:50%; vertical-align:middle; margin-right:8px;">
-          ${p.name}
-      </td>
-      <td class="${matched ? 'correct' : 'wrong'}">${userSelection || "---"}</td>
-      <td>${p.hobby}</td>
-      <td>${matched ? '✅' : '❌'}</td>
-      <td class="info-text">${p.info}</td>
-  </tr>`;
+          // Build a Card instead of a Table Row
+          resultsHtml += `
+            <div class="result-card match-${matched}">
+                <div class="card-header">
+                    <img src="${p.image}" class="profile-pic" style="width:40px; height:40px; border:none; box-shadow:none;">
+                    <span class="person-name" style="font-size:1rem;">${p.name}</span>
+                    <span style="margin-left:auto">${matched ? '✅' : '❌'}</span>
+                </div>
+                
+                <div style="margin: 10px 0;">
+                    <span style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Your Choice</span><br>
+                    <span class="${matched ? 'correct' : 'wrong'}" style="font-size:1rem;">${userSelection || "No Selection"}</span>
+                </div>
 
+                ${!matched ? `
+                <div style="margin-bottom: 10px;">
+                    <span style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted); font-weight:700;">Correct Hobby</span><br>
+                    <span style="font-weight:700; color:var(--text-main);">${p.hobby}</span>
+                </div>` : ''}
+
+                <div class="card-info">
+                    <strong style="color:var(--primary);">Did you know?</strong><br>
+                    ${p.info}
+                </div>
+            </div>`;
       });
+
+      resultsHtml += `</div>`;
 
       // disable the "back to start" button
       //resultsHtml += `</table><br><button onclick="location.reload()">Back to Start</button>`;
@@ -178,6 +194,14 @@ function shuffleArray(array) {
                 <h1>Results for ${window.currentPlayer}</h1>
                 <h2>Final Score: ${correct} / 30</h2>
             </div>
+			// Inside submit() after document.body.innerHTML is updated:
+confetti({
+  particleCount: 150,
+  spread: 70,
+  origin: { y: 0.6 },
+  colors: ['#6366f1', '#22c55e', '#f59e0b'] // Matches your Indigo/Emerald theme
+});
+
             ${resultsHtml}`;
 
 		  //showLeaderboard(); 
@@ -479,12 +503,47 @@ select {
 }
 
 /* Results Table */
-table { border-collapse: collapse; width: 100%; max-width: 1000px; margin-top: 20px; background: white; border-radius: 12px; overflow: hidden; }
-th, td { border: 1px solid #e2e8f0; padding: 12px; text-align: left; }
-th { background-color: #f8f9fa; font-weight: 700; }
-.correct { color: var(--success); font-weight: bold; }
-.wrong { color: #ef4444; font-weight: bold; }
-.info-text { font-size: 0.85em; color: var(--text-muted); font-style: italic; }
+/* Container for the new card results */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin-top: 30px;
+}
+
+/* Individual Result Card */
+.result-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.result-card.match-true { border-left: 5px solid var(--success); }
+.result-card.match-false { border-left: 5px solid #ef4444; }
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+}
+
+.card-info {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    background: #f8fafc;
+    padding: 10px;
+    border-radius: 8px;
+    line-height: 1.4;
+}
+
 </style>
 
 </head>
@@ -516,6 +575,7 @@ th { background-color: #f8f9fa; font-weight: 700; }
     </div>
 </body>
 </html>
+
 
 
 
