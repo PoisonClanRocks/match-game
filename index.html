@@ -29,35 +29,35 @@
   // 3. Master Data with Info
 const masterPairs = [
     { name: "Lloyd Allen", hobby: "Infosec", info: "He's always been into stuff like cybersecurity. He's even attended a few DEFCONs. So Lloyd, I got an email from nigerian_prince@legitemail.com, should i open the attachment?", image: "images/lloyd_allen.jpg" },
-    { name: "Mark Belonio", hobby: "Finding the One Piece", info: "ONE PIECE IS REAL. Ive been reading the manga One Piece for decades, and have over 30 figures of my favorite character, Tony Tony Chopper. Since I am the creator of this game, I will also sneak in that I love cooking Japanese food, riding my OneWheel, and at one point in time I was a Krav Maga expert.", image: "images/mark_belonio.jpg" },
+    { name: "Mark Belonio", hobby: "Finding the One Piece", info: "ONE PIECE IS REAL. Ive been reading the manga One Piece for decades, and have over 30 figures of Tony Tony Chopper. As creator of this game, I will abuse the fun facts and add that besides manga and anime, I love cooking Japanese food, riding my OneWheel, and at one point in time I was considered a Krav Maga expert.", image: "images/mark_belonio.jpg" },
     { name: "Scott Blake", hobby: "Gardening", info: "His favorite thing to grow in the garden is Tomatoes. Is that a fruit or a vegetable? A Microsoft Forms quiz is coming your way soon.", image: "images/scott_blake.jpg" },
     { name: "Cheri Bowden", hobby: "Panning for Gold", info: "Has too many hobbies; also enjoys fishing, archery, sewing, and camping. Does she find enough gold to cover the costs of all these?", image: "images/cheri_bowden.jpg" },
-    { name: "Marley Breese", hobby: "Collecting Concert T-Shirts", info: "She has a really cool collection on display, showcasing her love of music. Current favorites in the collection are Jon Bellion and Rainbow Kitten Surprise. Try to guess her favorite music artist!", image: "images/marley_breese.jpg" },
-    { name: "Will Costanzo", hobby: "Collecting Cards & Star Wars", info: "Owns some rare Pokemon cards (some worth thousands!), and interesting items like grocery store promo cardboard stands. Collecting knows no limits...", image: "images/will_costanzo.jpg" },
+    { name: "Marley Breese", hobby: "Collecting Concert Tees", info: "She has a really cool collection on display, showcasing her love of music. Current favorite shirts are a Jon Bellion and a Rainbow Kitten Surprise. Try to guess her favorite music artist!", image: "images/marley_breese.jpg" },
+    { name: "Will Costanzo", hobby: "Collecting Cards & Star Wars", info: "Will's extensive collection includes some pretty rare Pokemon cards (some worth thousands!). For Star Wars, he's got a few interesting items like grocery store promo cardboard stands. Collecting knows no limits...", image: "images/will_costanzo.jpg" },
     { name: "Stan Draminski", hobby: "Columbus Crew (MLS Team)", info: "He's a huge fan of the Crew! When not obsessing over his favorite soccer team, Stan also plays board games.", image: "images/stan_draminski.jpg" },
     { name: "Saul Figueroa", hobby: "Skiing", info: "Saul has only been skiing for a few years, but has fallen in love with it, traveling all over the country to hit the slopes. Although he has recently been injured due to his favorite hobby, he's not letting that stop him. Montana better watch out when he's fully healed!", image: "images/saul_figueroa.jpg" },
-    { name: "Amber Haas", hobby: "Retro Game Collecting", info: "Collection highlights include a Super Mario World cart for the SNES, and a Starfox64 cart with box for the Nintendo 64. Those are some great classics.", image: "images/amber_haas.jpg" },
-    { name: "Justin Keefer", hobby: "Country Dancing", info: "Ask him about his favorite two-step spots!", image: "images/justin_keefer.jpg" },
-    { name: "Alexis Keller", hobby: "Off-roading", info: "Her favorite places to take the rig off-road with family are Glamis and Pismo in CA. Unrelated - Alexis is good at EVERYTHING.", image: "images/alexis_keller.jpg" },
-    { name: "Alex King", hobby: "Mead Brewing", info: "Promises to bring a batch of home-brew to the office soon. Alex also has very interesting music tastes!", image: "images/alex_king.jpg" },
-    { name: "Duo Li", hobby: "FC Barcelona", info: "Duo has been to Barcelona and visited Camp Nou, but hasn't had the opportunity to attend a game yet. He's working on this as aq high-priority bucket list item!", image: "images/duo_li.jpg" },
+    { name: "Amber Haas", hobby: "Retro Game Collecting", info: "Her collection highlights include a Super Mario World cart for the SNES, and a Starfox64 cart with box for the Nintendo 64. Those are some great classics.", image: "images/amber_haas.jpg" },
+    { name: "Justin Keefer", hobby: "Country Dancing", info: "Justin has been doing this for about 4 years, and is primarily a line-dancer, but has been branching out into two-step and country swing. TIL Cherry Bottom Boom is the name of a country dance, love it.", image: "images/justin_keefer.jpg" },
+    { name: "Alexis Keller", hobby: "Off-roading", info: "Her favorite places to take the rigs off-road with family are the dunes at Glamis and Pismo in California. Unrelated - Alexis is good at EVERYTHING.", image: "images/alexis_keller.jpg" },
+    { name: "Alex King", hobby: "Mead Brewing", info: "He got into mead during the HLT overtime pandemic, needing a hobby that didn't take too much of his nonexistent free time, but also actually felt productive. He's currently experimenting with various flavors like mulberry lemon and spiced apple. I want to try some!", image: "images/alex_king.jpg" },
+    { name: "Duo Li", hobby: "FC Barcelona", info: "Duo has been to Barcelona and visited Camp Nou, but hasn't had the opportunity to attend a game yet. He's working on this high-priority bucket list item!", image: "images/duo_li.jpg" },
     { name: "Eric Magoffin", hobby: "Riding Motorcycles", info: "He loves riding long stretches like the north part of the 202, and dreams of getting gnarly on a Kawasaki Ninja H2. Sounds fun, but don't get a speeding ticket!", image: "images/eric_magoffin.jpg" },
     { name: "Benito Moeckly", hobby: "Comics", info: "Benito's all-time favorite is Ultimate Spiderman. He's currently into Absolute Batman, and also loves anything X-Men and X-Men adjacent.", image: "images/benito_moeckly.jpg" },
-    { name: "Drew Moses", hobby: "Wine Tasting", info: "Wine tasting includes travel! Drew has recently visited Sienna, Italy, for wine and Florentine steaks.", image: "images/drew_moses.jpg" },
+    { name: "Drew Moses", hobby: "Wine Tasting", info: "Wine tasting includes travel! Drew has recently visited Sienna, Italy, for wine and Florentine steaks. Definitely beats what you get at Texas Roadhouse.", image: "images/drew_moses.jpg" },
     { name: "Brian Murphy", hobby: "Woodworking", info: "$5k for a 12.5ft wood dining table? Nah. Brian just made one himself. His most recent project was a laundry pedestal. Does he really worship laundry?", image: "images/brian_murphy.jpg" },
-    { name: "Tyler Neerings", hobby: "Factory-type Games", info: "Tyler's current favorite time-sink is the game Satisfactory. I hope games like these leave him... satiated.", image: "images/tyler_neerings.jpg" },
-    { name: "Josh O'Connor", hobby: "Mountain Biking", info: "Has been riding for a decade and recently started racing. Let's cheer him on!", image: "images/josh_oconnor.jpg" },
-    { name: "Alex Pagan", hobby: "To be discovered...", info: "Hobby info coming soon!", image: "images/alex_pagan.jpg" },
-    { name: "Geovany Pineda", hobby: "Gaming & Puzzles", info: "Also enjoys board games, escape rooms, and watching good TV. Is a hot sauce connoisseur.", image: "images/geovany_pineda.jpg" },
-    { name: "Natasha Proctor", hobby: "Running", info: "Has successfully completed several city runs.", image: "images/natasha_proctor.jpg" },
-    { name: "Jeff Rase", hobby: "Guitar and Piano", info: "His favorite song to play on piano is Chopin's Nocturne Op 9 No 2, and on guitar it's The Down Town by Days of the New.", image: "images/jeff_rase.jpg" },
-    { name: "Ed Riley", hobby: "Space Exploration", info: "Interested in SETI and the search for extraterrestrial life.", image: "images/ed_riley.jpg" },
-    { name: "John Sanchez", hobby: "Basketball", info: "Likes playing guard; all-time favorite player is Lebron James, current favorite is SGA.", image: "images/john_sanchez.jpg" },
-    { name: "Isaac Shell", hobby: "Writing Fantasy", info: "Currently writing a novel or three, and also developing a game in Unreal Engine.", image: "images/isaac_shell.jpg" },
-    { name: "Lam Truong", hobby: "To be discovered...", info: "Hobby info coming soon!", image: "images/lam_truong.jpg" },
+    { name: "Tyler Neerings", hobby: "Factory-type Games", info: "Factory games involve building, automating, and optimizing complex production lines. Tyler's current favorite time-sink is the game Satisfactory. I hope games like these leave him... satiated.", image: "images/tyler_neerings.jpg" },
+    { name: "Josh O'Connor", hobby: "Mountain Biking", info: "He has been riding for about a decade. That's a lot of miles. Recently, he has gone competitive, and has three races lines up this year. I'm trying to convince him to throw a camera on his helmet and stream his races.", image: "images/josh_oconnor.jpg" },
+    { name: "Alex Pagan", hobby: "Tabletop Gaming", info: "Alex's tabletop gaming figure collection is nearing 300 individual pieces and sets. He loves building and painting figures, which may take 1-2 hours or even up to 20 hours, depending on the size and detail.", image: "images/alex_pagan.jpg" },
+    { name: "Geovany Pineda", hobby: "Gaming & Puzzles", info: "When not playing video games or putting together a 1000-piece puzzle, Geo also enjoys board games, escape rooms, and watching good TV. Unrelated - He is practically immune to the heat of capsaicin, making him a hot sauce connoisseur. To him, the Last Dab is a beverage.", image: "images/geovany_pineda.jpg" },
+    { name: "Natasha Proctor", hobby: "Running", info: "She's a big-time trail runner, and has competed in long-distance races. Her hot take - a trail 50k is easier than a road half-marathon. Who's ready to get smoked by Natasha?", image: "images/natasha_proctor.jpg" },
+    { name: "Jeff Rase", hobby: "Guitar and Piano", info: "Jeff has been a musician his entire life. His favorite song to play on piano is Chopin's Nocturne Op 9 No 2. On guitar, it's The Down Town by Days of the New.", image: "images/jeff_rase.jpg" },
+    { name: "Ed Riley", hobby: "Space Exploration, SETI", info: "Ed has been enchanted by the unknowns of space since he was a youngster. There was even a time in his life where he was a Space Operations Officer in the Air Force. Hey, maybe one day there will be an FMS (SMS?) on a spacecraft.", image: "images/ed_riley.jpg" },
+    { name: "John Sanchez", hobby: "Basketball", info: "John likes playing guard most of all. His all-time favorite player is Lebron James, and his current favorite is SGA. Also, GO SUNS!", image: "images/john_sanchez.jpg" },
+    { name: "Isaac Shell", hobby: "Writing Fantasy", info: "Currently writing a novel or three - his active mind causes him to start new stories before finishing older ones. He is also developing a game in Unreal Engine.", image: "images/isaac_shell.jpg" },
+    { name: "Lam Truong", hobby: "UFC", info: "Lam loves watching MMA, and is a fan of Alexander Volkanovski, Max Holloway, and Joshua Van. He also likes playing video games in his spare time. I assume one of those games is EA Sports UFC?", image: "images/lam_truong.jpg" },
     { name: "Tyler Trumpie", hobby: "Fantasy Worldbuilding", info: "He loves building D&D campaigns and stories, and loves open-world game exploration. Discovering random in-game lore in obscure places is super fun!", image: "images/tyler_trumpie.jpg" },
     { name: "Jake Whitebread", hobby: "Hiking", info: "His all-time favorite hikes are Brown's Peak and Flatiron here in AZ. Unrelated - one of the nicest people you will ever meet in this reality or many other alternate realities.", image: "images/jake_whitebread.jpg" },
-    { name: "Stefan Woods", hobby: "Reading", info: "Ask him for a book series recommendation!", image: "images/stefan_woods.jpg" }
+    { name: "Stefan Woods", hobby: "Reading", info: "Fantasy books and classics are his go-to genres. Stefan's favorite author is James Islington, and his favorite series is Islington's Hierarchy. He is currently engrossed in Seneca Letters on Ethics.", image: "images/stefan_woods.jpg" }
 ];
 
   function startGame() {
@@ -666,6 +666,7 @@ select {
     </div>
 </body>
 </html>
+
 
 
 
